@@ -1,0 +1,43 @@
+﻿<Window x:Class="SaperLab2WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:SaperLab2WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ImageBrush  ImageSource="C:\flag2.jpg" x:Key="flag"/>
+    </Window.Resources>
+    <Grid Margin="0,90,0,0">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Cells}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="{Binding MineFieldRows}" Rows="{Binding MineFieldCols}"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ToggleButton IsChecked="{Binding IsOpened}" IsEnabled="{Binding IsFreeToCheck}">
+                        <StackPanel>
+                            <Image Source="{Binding CurrentImage}" Stretch="Uniform" Width="20" Height="20"/>
+                            <ContentControl Content="{Binding Content}"/>
+                        </StackPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseRightButtonDown">
+                                <i:InvokeCommandAction Command="{Binding FlagCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ToggleButton>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Slider HorizontalAlignment="Left" Margin="19,-68,0,0" VerticalAlignment="Top" Width="169" Height="22" Value="{Binding MineFieldRows}" SmallChange="1" Minimum="2"/>
+        <Slider HorizontalAlignment="Left" Margin="231,-68,0,0" VerticalAlignment="Top" Width="169" Height="22" Value="{Binding MineFieldCols}" SmallChange="1" Minimum="2"/>
+        <ToggleButton Content="{Binding StartGameButtonText}" HorizontalAlignment="Left" Margin="457,-68,0,0" VerticalAlignment="Top" Height="28" Width="109" IsChecked="{Binding IsGameStarted}"/>
+        <Label Content="{Binding LabelRows}" HorizontalAlignment="Left" Margin="19,-25,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding LabelCols}" HorizontalAlignment="Left" Margin="239,-25,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding CellsFlagged}" HorizontalAlignment="Left" Margin="600,-60,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
